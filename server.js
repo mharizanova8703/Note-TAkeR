@@ -4,6 +4,7 @@ const express = require('express')
 const path = require('path')
 //fes reed and write the files
 const fs = require('fs')
+const apiRoutes = require("./routes/apiRoutes")
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -13,6 +14,7 @@ app.use(express.json())
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
+app.use("/api", apiRoutes)
 
 // Get route
 app.get('/', (req, res) =>
@@ -22,11 +24,7 @@ app.get('/', (req, res) =>
 app.get('/notes', (req, res) =>
   res.sendFile(path.join(__dirname, '/public/notes.html')),
 )
-// Route to direct users to a 404 page
 
-app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, 'public/pages/404.html')),
-)
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`),
 )
